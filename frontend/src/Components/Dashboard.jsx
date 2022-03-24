@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 import "./Style.css";
 import { Button } from 'antd';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 export const Dashboard = () => {
     const [data, setData] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
@@ -19,26 +19,22 @@ export const Dashboard = () => {
                 setError(true);
             });
     }, []);
+    /* handleChecked function is filter out the checked out items from the list*/
     const handleChecked = (e) => {
-        // console.log(e);
-        // e.checked = !e.checked;
         let check = e.checked;
         let updateData = data.map((el) => {
             return el._id === e._id ? { ...el, checked: !check } : el
         });
         setData(updateData)
-        // const payload = {
-        //     checked:!e.checked
-        // }
-        // console.log("payload",payload)
-        // axios.patch(`https://airmeet-mock-server.herokuapp.com/products/${e._id}`,payload).then(res=>console.log(res))
     }
+    /* handleDelete function is delete out the checked out items from the list*/
     const handleDelete = () => {
         let modifiedData = data.filter((el) => {
             return el.checked === false; 
         })
         setData(modifiedData)
     }
+    /* handleFavourite function is move to favourite list the checked out items from the list*/
     const handleFavourite = () => {
         let favouriteData = data.filter((el) => {
             return el.checked === true;
@@ -75,25 +71,25 @@ export const Dashboard = () => {
                         </Button>
                     </div>
                     <div>
-                          <Link to='/favourite'> <Button >Go to Favorite</Button></Link> 
+                          <Link to='/favourite'> <Button type="ghost" >Go to Favorite</Button></Link> 
                     </div>
                 </div>
                 <table style={{width:'100%',border:'1px solid black'}}>
-                    <thead>
+                    <thead style={{border:"2px solid black"}}>
                     <tr>
                         <th>Status</th>
                         <th>S.No</th>
                         <th>Name</th>
-                            <th>Email</th>
-                            <th>City</th>
+                        <th>Email</th>
+                        <th>City</th>
                         <th>Avatar</th>
-                            <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                      <tbody style={{padding:'1em'}}>
                     {data.map((el) => {
                         return (
-                            <tr className="tableRow" key={el._id} style={{backgroundColor:el.checked ? "red":'inherit'}} >
+                            <tr className="tableRow" key={el._id} style={{backgroundColor:el.checked ? "#C1F4C5":'inherit'}} >
                                 <td> <input type="checkbox"  onChange={()=>handleChecked(el)}  ref={checkedRef} ></input></td>
                                 <td>  <p>{el.s.no}</p></td>
                                 <td>  <p className="extraSpace">{el.first_name + " " + el.last_name}</p></td>
