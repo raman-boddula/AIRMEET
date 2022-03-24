@@ -16,7 +16,13 @@ export const Dashboard = () => {
             }).catch(e=>setError(true));
     }, []);
     const handleChecked = (e) => {
-        console.log(e.target.checked);
+        // console.log(e);
+        // e.checked = !e.checked;
+        const payload = {
+            checked:!e.checked
+        }
+        console.log("payload",payload)
+        axios.patch(`https://airmeet-mock-server.herokuapp.com/products/${e._id}`,payload).then(res=>console.log(res))
     }
     return loading ? (
             <div>
@@ -41,9 +47,7 @@ export const Dashboard = () => {
                         </Button>
                     </div>
                     <div>
-                        {/* <Link to="/favorite">
-                            <Button className="favoriteButton">Go to Favorite</Button>
-                        </Link> */}
+                            <Button >Go to Favorite</Button>
                     </div>
                 </div>
                 <table style={{width:'100%',border:'1px solid black'}}>
@@ -61,8 +65,8 @@ export const Dashboard = () => {
                      <tbody style={{padding:'1em'}}>
                     {data.map((el) => {
                         return (
-                            <tr className="tableRow" key={el._id} >
-                                <td> <input type="checkbox" name="vehicle1" onChange={handleChecked} style={{ backgroundColor: checkedRef.current.checked ? "red" : "inherit" }} ref={checkedRef} ></input></td>
+                            <tr className="tableRow" key={el._id} style={{backgroundColor:el.checked ? "red":'inherit'}} >
+                                <td> <input type="checkbox"  onChange={()=>handleChecked(el)}  ref={checkedRef} ></input></td>
                                 <td>  <p>{el.s.no}</p></td>
                                 <td>  <p className="extraSpace">{el.first_name + " " + el.last_name}</p></td>
                                 <td>  <p className="extraSpace">{el.email}</p></td>

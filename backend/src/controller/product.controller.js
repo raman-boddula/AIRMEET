@@ -21,6 +21,19 @@ router.get("/", async (req, res) => {
     res.status(404).json({ message: e.message, status: "Failed" });
   }
 });
+router.patch("/:id", async (req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    })
+      .lean()
+      .exec();
+    const Allproducts = await Product.find().lean().exec();
+    res.status(200).json({ products: Allproducts, updated: product });
+  } catch (e) {
+    res.status(404).json({ message: e.message, status: "Failed" });
+  }
+});
 router.delete("/:id", async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id)
