@@ -89,9 +89,10 @@ export const Dashboard = () => {
                         </Button>
                     </div>
                     <div>
-                          <Link to='/favourite'> <Button type="ghost" >Go to Favorite</Button></Link> 
+                          <Link to='/favourite'> <Button type="ghost" > <strong> Go to Favorite </strong></Button></Link> 
                     </div>
                 </div>
+                <div style={{paddingTop:'100px'}}>
                 <table style={{width:'100%',border:'1px solid black'}}>
                     <thead style={{border:"2px solid black"}}>
                     <tr>
@@ -118,6 +119,7 @@ export const Dashboard = () => {
                         )
                     })}
                     </tbody>
-                </table>
+                    </table>
+                    </div>
             </div>
 }

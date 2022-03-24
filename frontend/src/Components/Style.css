@@ -10,6 +10,10 @@
 }
 
 .tableRow td:nth-child(5) {
+    padding-left: 8em;
+}
+
+.tableRow td:nth-child(4) {
     padding-left: 13em;
 }
 
@@ -17,10 +21,17 @@
     padding-left: 7em;
 }
 
+
 .btns {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 1em;
+    position: fixed;
+    background-image: linear-gradient(to right, #9ADCFF, white);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+        rgba(0, 0, 0, 0.22) 0px 15px 12px;
+
 }
 
 .divs {
