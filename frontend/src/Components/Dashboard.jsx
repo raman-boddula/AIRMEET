@@ -2,6 +2,7 @@ import React from "react";
 import axios from 'axios';
 import "./Style.css";
 import { Button } from 'antd';
+import {Link} from 'react-router-dom'
 export const Dashboard = () => {
     const [data, setData] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
@@ -13,41 +14,68 @@ export const Dashboard = () => {
             .then(res => {
                 setData(res.data.products);
                 setLoading(false);
-            }).catch(e=>setError(true));
+            }).catch((e) => {
+                setLoading(false);
+                setError(true);
+            });
     }, []);
     const handleChecked = (e) => {
         // console.log(e);
         // e.checked = !e.checked;
-        const payload = {
-            checked:!e.checked
+        let check = e.checked;
+        let updateData = data.map((el) => {
+            return el._id === e._id ? { ...el, checked: !check } : el
+        });
+        setData(updateData)
+        // const payload = {
+        //     checked:!e.checked
+        // }
+        // console.log("payload",payload)
+        // axios.patch(`https://airmeet-mock-server.herokuapp.com/products/${e._id}`,payload).then(res=>console.log(res))
+    }
+    const handleDelete = () => {
+        let modifiedData = data.filter((el) => {
+            return el.checked === false; 
+        })
+        setData(modifiedData)
+    }
+    const handleFavourite = () => {
+        let favouriteData = data.filter((el) => {
+            return el.checked === true;
+        })
+        console.log("favouriteData",favouriteData);
+        let localData = JSON.parse(localStorage.getItem('favourite'));
+        if (localData) {
+            let totalData = [...localData, ...favouriteData];
+        localStorage.setItem('favourite', JSON.stringify(totalData));
+        } else {
+            localStorage.setItem('favourite', JSON.stringify(favouriteData));
         }
-        console.log("payload",payload)
-        axios.patch(`https://airmeet-mock-server.herokuapp.com/products/${e._id}`,payload).then(res=>console.log(res))
     }
     return loading ? (
             <div>
-           <h1>... Loading</h1>
+            <img style={{width:'100%',height:"100vh"}} src='https://cdn.dribbble.com/users/2346349/screenshots/9246147/media/06971345603f8422d664fa0ea362b3a5.gif' alt="loading"/>
             </div>
             )
             :error ? (
             <div>
-              <h1>  Error</h1>
+                <img style={{width:'100%',height:"100vh"}} src="https://media.moddb.com/images/downloads/1/195/194539/MOSHED-2020-2-20-22-48-16.gif" alt='error'/>
             </div>
             )
             : <div>
-                <div id="ButtonsDiv">
+                <div className="btns">
                     <div>
-                        <Button  type="danger">
+                        <Button  type="danger" onClick={handleDelete}>
                             Delete Selected
                         </Button>
                     </div>
                     <div>
-                        <Button  type='primary'>
+                        <Button  type='primary' onClick={handleFavourite}>
                             Add Selected to Favorite
                         </Button>
                     </div>
                     <div>
-                            <Button >Go to Favorite</Button>
+                          <Link to='/favourite'> <Button >Go to Favorite</Button></Link> 
                     </div>
                 </div>
                 <table style={{width:'100%',border:'1px solid black'}}>
