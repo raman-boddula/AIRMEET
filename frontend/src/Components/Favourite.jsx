@@ -50,18 +50,7 @@ export const Favourite = () => {
                     })}
                     </tbody>
                 </table>
-                            {/* <div>
-                        {data.map((el) => {
-                            return (
-                                <div className="favoritesDiv" key={el._id}>
-                                    <img src={el.avatar} alt={el._id} />
-                                    <p>{el.first_name + " " + el.last_name}</p>
-                                    <p>{el.email}</p>
-                                    <p>{el.city}</p>
-                                </div>
-                            )
-                        })}
-                    </div> */}
+                          
             </div> : <div>
                 <h1 style={{ textAlign: 'center' }}>Favourite's Page</h1>
                 <Link to="/"><Button type="primary" style={{marginLeft:'5em'}} >Goto Mainpage</Button></Link>

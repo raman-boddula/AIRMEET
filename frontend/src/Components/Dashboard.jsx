@@ -7,7 +7,7 @@ export const Dashboard = () => {
     const [data, setData] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(false);
-    const checkedRef=React.useRef({current:null})
+    const checkedRef = React.useRef({ current: null });
     React.useEffect(() => {
         setLoading(true);
         axios.get('https://airmeet-mock-server.herokuapp.com/products')
@@ -48,6 +48,18 @@ export const Dashboard = () => {
             localStorage.setItem('favourite', JSON.stringify(favouriteData));
         }
     }
+    const handleSelectAll = () => {
+        let modifiedData = data.map((el) => {
+            return { ...el, checked: true };
+        })
+        setData(modifiedData)
+    }
+    const handleDeSelectAll= () => {
+        let modifiedData = data.map((el) => {
+            return { ...el, checked: false };
+        })
+        setData(modifiedData)
+    }
     return loading ? (
             <div>
             <img style={{width:'100%',height:"100vh"}} src='https://cdn.dribbble.com/users/2346349/screenshots/9246147/media/06971345603f8422d664fa0ea362b3a5.gif' alt="loading"/>
@@ -64,6 +76,12 @@ export const Dashboard = () => {
                         <Button  type="danger" onClick={handleDelete}>
                             Delete Selected
                         </Button>
+                    </div>
+                    <div>
+                        <Button type='primary' onClick={handleSelectAll}>Select All</Button>
+                    </div>
+                     <div>
+                        <Button type='primary' onClick={handleDeSelectAll}>Deselect All</Button>
                     </div>
                     <div>
                         <Button  type='primary' onClick={handleFavourite}>
@@ -89,8 +107,8 @@ export const Dashboard = () => {
                      <tbody style={{padding:'1em'}}>
                     {data.map((el) => {
                         return (
-                            <tr className="tableRow" key={el._id} style={{backgroundColor:el.checked ? "#C1F4C5":'inherit'}} >
-                                <td> <input type="checkbox"  onChange={()=>handleChecked(el)}  ref={checkedRef} ></input></td>
+                            <tr className="tableRow" key={el._id}  style={{backgroundColor:el.checked ? "#C1F4C5":'inherit'}} >
+                                <td> <input type="checkbox" checked={el.checked ? true : false} onChange={()=>handleChecked(el)}  ref={checkedRef} ></input></td>
                                 <td>  <p>{el.s.no}</p></td>
                                 <td>  <p className="extraSpace">{el.first_name + " " + el.last_name}</p></td>
                                 <td>  <p className="extraSpace">{el.email}</p></td>
