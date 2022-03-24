@@ -39,6 +39,6 @@
 - Ant Design
 
 ## Deployed Link :
-[View](https://list-items-airmeet.vercel.app/)
+[View](https://list-items-airmeet-raman-boddula.vercel.app/)
 
 ## Thank You !
